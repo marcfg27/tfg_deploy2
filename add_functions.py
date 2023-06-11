@@ -8,6 +8,7 @@ from app import app
 
 
 with app.app_context():
+
     f.create_function('GETaccounts')
     f.create_function('GETmoney')
     f.create_function('GETposts')
@@ -21,6 +22,8 @@ with app.app_context():
     f.create_function('GETaccountslist')
     f.create_function('POSTproduct')
     f.create_function('GETstock')
+    a = f.Function.get_all_functions()
+
     #f.create_function('GETcloses')
 
     db.session.commit()

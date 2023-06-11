@@ -93,7 +93,7 @@ class Accounts(Resource):
 
                     acc.save_to_db()
                 except Exception as e:
-                    return {'message': "Error creating Account" + str(e)}, 409
+                    return {'message': "Internal error creating Account"}, 409
 
                 return {'account': acc.username}, 200 if acc else 404
             else:
@@ -154,8 +154,8 @@ class money(Resource):
                 return response
             except Exception as e:
                 print(e)
-                response = jsonify({'message': str(e)})
-                response.status_code = 400
+                response = jsonify({'message': "Conflict: request could not be completed"})
+                response.status_code = 409
                 response.headers['Access-Control-Allow-Credentials'] = 'true'
                 return response
         else:

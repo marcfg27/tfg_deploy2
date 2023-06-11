@@ -26,7 +26,7 @@ class Product(Resource):
 
            data = parser.parse_args()
 
-           url = 'https://127.0.0.1:5000/stock'#data['stockApi']
+           url = data['stockApi']
            if es_url_permitida(url):
                cookies = request.cookies
                csrf_token = request.headers.get('X-CSRFToken')

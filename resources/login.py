@@ -63,7 +63,7 @@ def catch_exceptions(f):
         except RateLimitExceeded as e:
             LoginLog.login_limit_caller(request.username, request)
             #logging.warning('Rate limit exceeded for username %s in address %s', request.username, request.remote_addr)
-            return {'message': str(e)}, 429
+            return {'message': 'Rate limit exceeded'}, 429
         except Exception as e:
             logging.error('Unexpected error during login: %s', e)
             response = {"message": "An unexpected error occurred during login"}

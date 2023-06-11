@@ -15,6 +15,17 @@ class Function(db.Model):
         else:
             return None
 
+    @classmethod
+    def get_all_functions(cls):
+        return cls.query.all()
+
+    @classmethod
+    def delete_all_functions(cls):
+        functions = cls.query.all()
+        for function in functions:
+            db.session.delete(function)
+        db.session.commit()
+
 
 def create_function(name):
     function = Function(name=name)

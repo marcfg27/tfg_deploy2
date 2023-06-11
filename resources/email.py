@@ -64,7 +64,7 @@ class eMail(Resource):
                 response.headers['Access-Control-Allow-Credentials'] = 'true'
                 return response
         except Exception as e:
-            response = jsonify({'message': "Error: " + str(e)})
+            response = jsonify({'message': "Conflict: request could not be completed"})
             response.status_code = 409
             return response
 
@@ -93,7 +93,7 @@ class eMail(Resource):
                     response.headers['Access-Control-Allow-Credentials'] = 'true'
                     return response
             except Exception as e:
-                response = jsonify({'message': "Error: " + str(e)})
+                response = jsonify({'message': "Conflict: request could not be completed"})
                 response.status_code = 409
                 return response
 
@@ -134,7 +134,7 @@ def catch_exceptions(f):
             return f(*args, **kwargs)
         except RateLimitExceeded as e:
             EmailLog.resetlimit_caller(request.username,request)
-            return {'message': str(e)}, 429
+            return {'message': 'Rate limit exceeded'}, 429
     return wrapper
 
 class eMail2(Resource):
@@ -161,8 +161,8 @@ class eMail2(Resource):
                 response.headers['Access-Control-Allow-Credentials'] = 'true'
                 return response
             except Exception as e:
-                response = jsonify({'message': "Error: " + str(e)})
-                response.status_code = 409
+                response = jsonify({'message': "Request could not be completed"})
+                response.status_code = 500
                 return response
 
 
@@ -206,6 +206,6 @@ class eMail3(Resource):
 
                     return response
         except Exception as e:
-            response = jsonify({'message': "Error: " + str(e)})
+            response = jsonify({'message': "Conflict: request could not be completed"})
             response.status_code = 409
             return response

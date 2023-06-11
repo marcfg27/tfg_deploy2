@@ -45,9 +45,7 @@ def generate_auth_token(id, contexto, expiration=6000):
     token_b = json.dumps(token).encode("utf-8")
 
     aesgcm = AESGCM(str.encode(secret2))
-
     nonce = secrets.token_bytes(12)
-
     ciphertext = aesgcm.encrypt(nonce, token_b, None)
 
     token_bytes = nonce + ciphertext

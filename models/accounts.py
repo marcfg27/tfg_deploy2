@@ -38,7 +38,7 @@ class AccountsModel(db.Model):
     password = db.Column(db.String, nullable=False)
     available_money = db.Column(db.Integer)
     email = db.Column(db.String(30), nullable=False)
-    code = db.Column(db.String(8))
+    code = db.Column(db.String(32))
     posts = db.relationship("PostsModel", back_populates="account", cascade="all, delete-orphan")
     functions = db.relationship('Function', secondary=user_function, backref=db.backref('users', lazy='dynamic'))
 
@@ -76,6 +76,7 @@ class AccountsModel(db.Model):
 
     def assign_basic_functions(self):
         f = self.functions
+      #  a = Function.get_all_functions()
         f.append(Function.get_function_by_name('GETaccounts'))
         f.append(Function.get_function_by_name('GETposts'))
         f.append(Function.get_function_by_name('GETinside'))
@@ -87,7 +88,8 @@ class AccountsModel(db.Model):
         f.append(Function.get_function_by_name('POSTproduct'))
         f.append(Function.get_function_by_name('GETstock'))
         f.append(Function.get_function_by_name('GETmoney'))
-        f.append(Function.get_function_by_name('GETcloses'))
+       # f.append(Function.get_function_by_name('GETcloses'))
+
 
 
     def generar_codigo(self, t):
@@ -107,7 +109,7 @@ class AccountsModel(db.Model):
         else:
             mensaje = Message('Reset code', sender='tu_correo@gmail.com', recipients=[destinatario])
             mensaje.body = f'Your password reset code is: {codigo}'
-        # mail.send(mensaje)
+        mail.send(mensaje)
 
         return intervalo
 
