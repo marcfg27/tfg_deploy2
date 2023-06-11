@@ -73,7 +73,9 @@ import models.Function as f
 
 api.add_resource(money,'/money')#/<string:username>
 
+from flask_wtf.csrf import  CSRFProtect
 
+csrf = CSRFProtect(app)
 
 
 @app.route('/')
@@ -87,13 +89,21 @@ def inside():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
-@app.route('/.well-known/pki-validation/E19C22072C9C2BF514871666B0AEF69D.txt')
-def generate_file():
-        return send_from_directory(app.root_path, 'E19C22072C9C2BF514871666B0AEF69D.txt')
+@app.after_request
+def add_security_headers(response):
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['Content-Security-Policy'] = "default-src 'self'; img-src 'none'"
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    return response
 
+@app.before_request
+@require_access
+def acces_control():
+    pass
 
 
 if __name__ == '__main__':
    app.run()
-
-
