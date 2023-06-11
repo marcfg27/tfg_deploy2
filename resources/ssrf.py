@@ -12,7 +12,7 @@ def es_url_permitida(url):
         "url2",
         "url3"
     ]
-    return url in lista_blanca
+    return True
 
 class Product(Resource):
 
