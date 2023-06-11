@@ -43,7 +43,7 @@ class Product(Resource):
            else:
                return 'URL no permitida', 403
        except Exception as e:
-           return {'message':'Error'}, 500
+           return {'message':'Error' + str(e)}, 500
 
 
 class Stock(Resource):
