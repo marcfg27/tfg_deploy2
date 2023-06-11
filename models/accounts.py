@@ -35,7 +35,7 @@ class AccountsModel(db.Model):
     __tablename__ = 'accounts'
     username = db.Column(db.String(30), unique=True, nullable=False)
     id = db.Column('id', db.String(length=36), default=lambda: str(uuid.uuid4()), primary_key=True)
-    password = db.Column(db.String(65), nullable=False)
+    password = db.Column(db.String, nullable=False)
     available_money = db.Column(db.Integer)
     email = db.Column(db.String(30), nullable=False)
     code = db.Column(db.String(8))
