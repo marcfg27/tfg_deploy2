@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'provamarctfg'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_64534843CF514058A376EF9C1A7FE546 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C5B2C1378252474387393BC7E180AF1C }}
