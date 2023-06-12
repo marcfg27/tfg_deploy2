@@ -36,7 +36,7 @@ class eMail(Resource):
             code = data['code']
             valid_code = re.match(r'^[a-zA-Z0-9]+$', data['code'])
             if not valid_code:
-                validation.input_validation_fail_code_caller(g.user,data['code'],request)
+                validation.input_validation_fail_code_caller(g.user.username,data['code'],request)
                 return {'message': 'Invalid Code. Only alphanumeric characters are allowed.'}, 400
             if g.user is not None and verify_verification_code(g.user.code, code):
                 g.user.code = None
@@ -59,7 +59,7 @@ class eMail(Resource):
                 return response
             else:
                 response = jsonify({'correct': False})
-                EmailLog.f2code_fail_caller(g.user,request)
+                EmailLog.f2code_fail_caller(g.user.username,request)
                 response.headers['Access-Control-Allow-Credentials'] = 'true'
                 return response
         except Exception as e:
@@ -184,7 +184,7 @@ class eMail3(Resource):
 
                 valid_code = re.match(r'^[a-zA-Z0-9]+$', data['code'])
                 if not valid_code:
-                    EmailLog.resetfail_caller(username,request.remote_addr)
+                    EmailLog.resetfail_caller(username,request)
                     return {'message': 'Invalid Code. Only alphanumeric characters are allowed.'}, 400
 
                 if user is not None and verify_verification_code(user.code, code,500):
@@ -193,10 +193,10 @@ class eMail3(Resource):
                     user.hash_password(newPas)
                     user.save_to_db()
                     response = jsonify({'message': 'password changed'})
-                    EmailLog.reset_caller(username,request.remote_addr)
+                    EmailLog.reset_caller(username,request)
                     return response
                 else:
-                    EmailLog.resetfail_caller(username,request.remote_addr)
+                    EmailLog.resetfail_caller(username,request)
                     response = jsonify({'message': 'Error code not valid'})
                     # response.headers['Access-Control-Expose-Headers'] = 'Authorization'
                     response.headers['Access-Control-Allow-Credentials'] = 'true'
