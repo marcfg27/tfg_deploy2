@@ -34,12 +34,11 @@ class eMail(Resource):
             parser.add_argument('code', type=str, required=True, help="This field cannot be left blanck")
             data = parser.parse_args()
             code = data['code']
-
             valid_code = re.match(r'^[a-zA-Z0-9]+$', data['code'])
             if not valid_code:
                 validation.input_validation_fail_code_caller(g.user,data['code'],request)
                 return {'message': 'Invalid Code. Only alphanumeric characters are allowed.'}, 400
-            if g.user is not None and True: #verify_verification_code(g.user.code, code):
+            if g.user is not None and verify_verification_code(g.user.code, code):
                 g.user.code = None
                 g.user.save_to_db()
                 username = g.user.username
@@ -177,7 +176,6 @@ class eMail3(Resource):
                 data = parser.parse_args()
                 code = data['code']
                 newPas = data['password']
-                username = data['username']
                 username = escape(data['username'])
                 username = username.casefold()
                 username = unidecode(username)
@@ -192,7 +190,7 @@ class eMail3(Resource):
                 if user is not None and verify_verification_code(user.code, code,500):
                     user.code = None
                     user.save_to_db()
-                    user.hash_password(data['password'])
+                    user.hash_password(newPas)
                     user.save_to_db()
                     response = jsonify({'message': 'password changed'})
                     EmailLog.reset_caller(username,request.remote_addr)

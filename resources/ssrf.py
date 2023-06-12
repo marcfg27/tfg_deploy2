@@ -8,11 +8,9 @@ from flask import request
 def es_url_permitida(url):
 
     lista_blanca = [
-        "https://127.0.0.1:5000/stock",
-        "url2",
-        "url3"
+        "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new",
     ]
-    return True
+    return url in lista_blanca
 
 class Product(Resource):
 
@@ -35,15 +33,19 @@ class Product(Resource):
                    'X-CSRF-Token': csrf_token,
                    'Authorization': auth_token
                }
-               inventory_response = requests.get(url, headers=headers, cookies=cookies, verify=False)
+               inventory_response = requests.get(url)
                inventory_data = inventory_response.json()
+               if not isinstance(inventory_data, int):
+                   raise ValueError("inventory_data is not an integer")
+               t = {'inventory_data': inventory_data}, 200
+
 
                return {'inventory_data': inventory_data}, 200
 
            else:
                return 'URL no permitida', 403
        except Exception as e:
-           return {'message':'Error' + str(e)}, 500
+           return {'message':'Error'}, 500
 
 
 class Stock(Resource):

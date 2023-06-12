@@ -44,6 +44,10 @@ secret_key2 = descifrar_clave(os.environ.get('MI_SECRET_KEY2'),KEK)
 admin_pass = descifrar_clave(os.environ.get('ADMIN_PASS'),KEK)
 email_user = descifrar_clave(os.environ.get('MAIL_USERNAME'),KEK)
 email_pass = descifrar_clave(os.environ.get('MAIL_PASSWORD'),KEK)
+url = descifrar_clave(os.environ.get('databaseLogin'),KEK)
+
+
+
 
 
 #Salt = "11600f8a2e578cc957564c13dc3f5c57bc52c5cfd5324f36b40be7b96f090b6d"

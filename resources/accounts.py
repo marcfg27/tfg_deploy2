@@ -1,25 +1,19 @@
-import hashlib
-import hmac
-import logging
 import re
-import string
-import secrets
+
 
 import pwnedpasswords
 
 
-from flask import g, current_app
+from flask import g
 from flask import request, jsonify, make_response
 from flask_restful import Resource, reqparse
 from markupsafe import escape
 from unidecode import unidecode
 
 from lock import lock
-from models.accounts import AccountsModel, auth
+from models.accounts import AccountsModel
 from LogManager import validation
-from datab import db
 
-#import pymysql
 
 class Accounts(Resource):
 
@@ -37,9 +31,9 @@ class Accounts(Resource):
             parser.add_argument('username', type=str, required=True, help="This field cannot be left blanck")
             parser.add_argument('password', type=str, required=True, help="This field cannot be left blanck")
             parser.add_argument('email', type=str, required=True, help="This field cannot be left blanck")
-            parser.add_argument('available_money', type=int,required=False)
+            #parser.add_argument('available_money', type=int,required=False)
             data = parser.parse_args()
-            avalible_money=data['available_money']
+            #avalible_money=data['available_money']
 
             user = data['username']
             email = data['email']
@@ -81,12 +75,11 @@ class Accounts(Resource):
 
             if(not acc1):
 
-                if(avalible_money is not None):
-                    acc= AccountsModel(username,email,available_money=avalible_money)
+                '''if(avalible_money is not None):
+                    acc= AccountsModel(username,email,available_money=avalible_money)'''
 
-                else:
-                    acc = AccountsModel(username,email)
-                acc.hash_password(data['password'])
+                acc = AccountsModel(username, email)
+                acc.hash_password(password)
                 try:
                     acc.save_to_db()
                     acc.assign_basic_functions()
@@ -98,9 +91,7 @@ class Accounts(Resource):
                 return {'account': acc.username}, 200 if acc else 404
             else:
                 return {'message': "Error creating Account"}, 409
-               # return {'message': "Account with username [{}] already exists".format(username)}, 409
 
-   # @require_access('d_account')
     def delete(self, username):
         with lock.lock:
             acc = AccountsModel.get_by_username(username)

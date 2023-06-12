@@ -30,7 +30,6 @@ class Posts(Resource):
         with lock.lock:
             if(acc):
                 txt = escape(data["text"])
-                #txt = data['text']
                 txt = unidecode(txt)
                 if(len(txt)>280):
                     validation.input_validation_fail_text_caller(acc.username,request)
