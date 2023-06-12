@@ -1,10 +1,17 @@
 import os
 import secrets
 
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.keys import KeyClient
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from flask_sqlalchemy import SQLAlchemy
 
 
+VAULT_URL = os.environ["VAULT_URL"]
+credential = DefaultAzureCredential()
+client = KeyClient(vault_url=VAULT_URL, credential=credential)
+key_name = "KeyTFG"
+key = client.get_key(key_name=key_name)
 def cifrar_clave(clave_a_cifrar, clave_cifrado):
     encode= clave_cifrado.encode('utf-8')
     aesgcm = AESGCM(encode)

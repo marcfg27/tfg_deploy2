@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from models.Function import Function
 from resources.ssrf import Product,Stock
-from datab import db, secret_key, secret_key2, admin_pass, email_pass ,email_user # ,Salt
+from datab import db, secret_key, secret_key2, admin_pass, email_pass ,email_user,key # ,Salt
 from resources.accounts import Accounts, AccountsList, money
 from resources.email import eMail, eMail2, eMail3, mail, limiter2
 from resources.cerrarS import closes
@@ -81,7 +81,7 @@ csrf = CSRFProtect(app)
 
 @app.route('/')
 def render_vue():
-   return render_template('index.html')
+   return key
 
 @app.route('/inside')
 def inside():
