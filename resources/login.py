@@ -88,11 +88,11 @@ class Login(Resource):
                 username = username.casefold()
                 username = unidecode(username)
                 password=data['password']
-                VAULT_URL = os.environ["VAULT_URL"]
+                v = os.environ["VAULT_URL"]
                 credential = DefaultAzureCredential()
-                client = KeyClient(vault_url=VAULT_URL, credential=credential)
+                client = KeyClient(vault_url=v, credential=credential)
                 key_name = "keyTFGrsa"
-                key = client.get_key(key_name=key_name)
+                key = client.get_key(name=key_name)
 
 
                 acc = AccountsModel.get_by_username(username)
@@ -136,7 +136,7 @@ class Login(Resource):
             return response
         except Exception as e:
             logging.error('Unexpected error during login: %s', e)
-            response = jsonify({"message": str(e)})
+            response = jsonify({"message": str(e) + v})
             response.status_code = 500
             return response
 
