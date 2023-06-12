@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from models.Function import Function
 from resources.ssrf import Product,Stock
-from datab import db, secret_key, secret_key2, admin_pass, email_pass ,email_user,key # ,Salt
+from datab import db, secret_key, secret_key2, admin_pass, email_pass ,email_user # ,Salt
 from resources.accounts import Accounts, AccountsList, money
 from resources.email import eMail, eMail2, eMail3, mail, limiter2
 from resources.cerrarS import closes
@@ -36,7 +36,7 @@ app.config['CORS_SUPPORTS_CREDENTIALS'] = True
 api = Api(app)
 migrate = Migrate(app, db)
 db.init_app(app)
-sslify = SSLify(app)
+#sslify = SSLify(app)
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -81,7 +81,7 @@ csrf = CSRFProtect(app)
 
 @app.route('/')
 def render_vue():
-   return key
+   return render_template('index.html')
 
 @app.route('/inside')
 def inside():
