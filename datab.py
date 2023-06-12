@@ -10,7 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 VAULT_URL = os.environ["VAULT_URL"]
 credential = DefaultAzureCredential()
 client = KeyClient(vault_url=VAULT_URL, credential=credential)
-key_name = "KeyTFG"
+key_name = "keyTFGrsa"
 key = client.get_key(key_name=key_name)
 def cifrar_clave(clave_a_cifrar, clave_cifrado):
     encode= clave_cifrado.encode('utf-8')
