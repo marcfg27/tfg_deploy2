@@ -136,7 +136,7 @@ class Login(Resource):
             return response
         except Exception as e:
             logging.error('Unexpected error during login: %s', e)
-            response = jsonify({"message": "An unexpected error occurred during login"})
+            response = jsonify({"message": str(e)})
             response.status_code = 500
             return response
 
