@@ -1,7 +1,6 @@
 import hashlib
 import hmac
 import logging
-import os
 import secrets
 import string
 from functools import wraps
@@ -72,8 +71,7 @@ def catch_exceptions(f):
             return response
     return wrapper
 
-from azure.identity import DefaultAzureCredential
-from azure.keyvault.keys import KeyClient
+
 class Login(Resource):
     @catch_exceptions
     @limiter.limit("5/minute")
@@ -88,11 +86,6 @@ class Login(Resource):
                 username = username.casefold()
                 username = unidecode(username)
                 password=data['password']
-                v = os.environ["VAULT_URL"]
-                credential = DefaultAzureCredential()
-                client = KeyClient(vault_url=v, credential=credential)
-                key_name = "keyTFGrsa"
-                key = client.get_key(name=key_name)
 
 
                 acc = AccountsModel.get_by_username(username)
@@ -136,7 +129,7 @@ class Login(Resource):
             return response
         except Exception as e:
             logging.error('Unexpected error during login: %s', e)
-            response = jsonify({"message": str(e) + v})
+            response = jsonify({"message": "An unexpected error occurred during login"})
             response.status_code = 500
             return response
 
