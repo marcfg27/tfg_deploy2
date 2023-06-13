@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from models.Function import Function
 from resources.ssrf import Product,Stock
-from datab import db, secret_key, secret_key2, admin_pass, email_pass ,email_user,url
+from datab import db, secret_key, secret_key2, admin_pass, email_pass ,email_user,url,production
 from resources.accounts import Accounts, AccountsList, money
 from resources.email import eMail, eMail2, eMail3, mail, limiter2
 #from resources.cerrarS import closes
@@ -28,7 +28,12 @@ app.config['SECRET_KEY2'] = secret_key2
 
 
 CORS(app, resources={r'/*': {'origins': '*'}})
-app.config['SQLALCHEMY_DATABASE_URI'] = url
+if(production == 1):
+    app.config['SQLALCHEMY_DATABASE_URI'] = url
+
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CORS_SUPPORTS_CREDENTIALS'] = True
@@ -106,4 +111,10 @@ def acces_control():
 
 
 if __name__ == '__main__':
-   app.run()
+    if (production == 1):
+        app.run()
+    else:
+        app.run(host='127.0.0.1', port=5000, ssl_context=('cert.pem', 'key.pem'))
+
+
+

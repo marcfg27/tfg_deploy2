@@ -39,6 +39,7 @@ def descifrar_clave(clave1_cifrada, clave_cifrado):
 
 db = SQLAlchemy()
 KEK = os.environ.get('KEK')
+production = os.environ.get('PRODUCTION')
 secret_key = descifrar_clave(os.environ.get('MI_SECRET_KEY'),KEK)
 secret_key2 = descifrar_clave(os.environ.get('MI_SECRET_KEY2'),KEK)
 admin_pass = descifrar_clave(os.environ.get('ADMIN_PASS'),KEK)
