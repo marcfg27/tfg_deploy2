@@ -2,7 +2,6 @@ from datetime import datetime
 import uuid
 
 from datab import db
-from sqlalchemy.dialects.postgresql import UUID
 
 
 class PostsModel(db.Model):

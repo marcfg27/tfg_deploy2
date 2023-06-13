@@ -47,7 +47,7 @@ class Accounts(Resource):
 
             if not valid_email:
                # return {'message': 'Invalid email. Please enter a valid email address.'}, 400
-               validation.input_validation_fail_email_caller(user,email,request)
+               validation.input_validation_fail_email_caller(user,request)
                return {'message': "Error creating Account"}, 409
 
             password = data['password']
@@ -118,7 +118,7 @@ class money(Resource):
   #  @require_access('g_money')
     def get(self): #,username
         username = g.user.username
-        username2 = '\' or username=\'marc\' --'
+        #username2 = '\' or username=\'marc\' --'
         if(username):
             try:
                 '''connection = db.engine.connect()

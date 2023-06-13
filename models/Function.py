@@ -8,7 +8,6 @@ class Function(db.Model):
 
     @classmethod
     def get_function_by_name(cls, name):
-        n = cls.name
         function = cls.query.filter_by(name=name).first()
         if function:
             return function

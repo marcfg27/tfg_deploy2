@@ -5,8 +5,7 @@ from LogManager import validation
 from flask import request
 from lock import lock
 from models.PostsModel import PostsModel
-from models.accounts import  g
-
+from flask import g
 
 class Posts(Resource):
    # @require_access('g_posts')
@@ -66,5 +65,4 @@ class Posts(Resource):
                 return {"posts": []}, 200
         except Exception as e:
             return {"message": "An error occurred deleting the post"}, 500
-        return {"message": "Post deleted successfully!"}, 200
 

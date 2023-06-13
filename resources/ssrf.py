@@ -1,4 +1,3 @@
-import validators
 
 
 import requests
@@ -26,18 +25,16 @@ class Product(Resource):
 
            url = data['stockApi']
            if es_url_permitida(url):
-               cookies = request.cookies
                csrf_token = request.headers.get('X-CSRFToken')
                auth_token = request.headers.get('Authorization')
-               headers = {
+               '''headers = {
                    'X-CSRF-Token': csrf_token,
                    'Authorization': auth_token
-               }
+               }'''
                inventory_response = requests.get(url)
                inventory_data = inventory_response.json()
                if not isinstance(inventory_data, int):
                    raise ValueError("inventory_data is not an integer")
-               t = {'inventory_data': inventory_data}, 200
 
 
                return {'inventory_data': inventory_data}, 200

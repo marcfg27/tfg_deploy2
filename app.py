@@ -1,23 +1,21 @@
 import os
 
-from flask import Flask, request, redirect, send_from_directory
+from flask import Flask, send_from_directory
 from flask import render_template
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api
-from models.Function import Function
-from resources.ssrf import Product,Stock
-from datab import db, secret_key, secret_key2, admin_pass, email_pass ,email_user,url,production
-from resources.accounts import Accounts, AccountsList, money
-from resources.email import eMail, eMail2, eMail3, mail, limiter2
-#from resources.cerrarS import closes
-from resources.login import Login, limiter
-from resources.posts import Posts
-from resources.xml import XML_HTTP
-from acces_control import require_access
+from flask_sslify import SSLify
 
 from acces_control import require_access
-from flask_sslify import SSLify
+from datab import db, secret_key, secret_key2, admin_pass, email_pass, email_user, url, production
+from resources.accounts import Accounts, AccountsList, money
+from resources.email import eMail, eMail2, eMail3, mail, limiter2
+# from resources.cerrarS import closes
+from resources.login import Login, limiter
+from resources.posts import Posts
+from resources.ssrf import Product, Stock
+from resources.xml import XML_HTTP
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = secret_key
@@ -72,9 +70,6 @@ api.add_resource(Product, '/product')
 api.add_resource(Stock, '/stock')
 #api.add_resource(closes, '/closes')
 
-
-
-import models.Function as f
 
 api.add_resource(money,'/money')#/<string:username>
 

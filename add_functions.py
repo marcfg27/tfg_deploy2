@@ -1,11 +1,6 @@
-from flask import Flask
 import models.Function as f
-
-from datab import db
 from app import app
-
-
-
+from datab import db
 
 with app.app_context():
 

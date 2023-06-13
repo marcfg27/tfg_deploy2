@@ -1,21 +1,16 @@
 import hashlib
 import hmac
 import json
-import os
 import secrets
 import time
-import uuid
-from functools import wraps
 
-
-import pyotp
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from flask import g, current_app, redirect, url_for, abort, jsonify
+from flask import g, current_app, redirect
 from flask_httpauth import HTTPTokenAuth
-from flask_mail import Mail, Message
+from flask_mail import Mail
 from jwt import encode, decode, ExpiredSignatureError, InvalidSignatureError
-from LogManager import tokenLog
 
+from LogManager import tokenLog
 from datab import db
 from models.Function import Function
 from models.accounts import AccountsModel
@@ -54,10 +49,8 @@ def generate_auth_token(id, contexto, expiration=6000):
     return token
 
 
-from models.revokedTokens import  RevokedToken
 def verify_auth_token(token,ContextoUsuario,bool):
         try:
-            a = request
             data = decode_auth_token(token,bool)
         except ExpiredSignatureError:
             tokenLog.token_expired_caller(request)
@@ -110,12 +103,11 @@ def decode_auth_token(token,bool):
         return data
     except:
         raise
-from flask import request
+
 
 @auth.verify_token
 def verify_token(token):
     try:
-        a = request
         ctx = request.cookies.get('ctx')
         endpoint = request.endpoint
         if(ctx):

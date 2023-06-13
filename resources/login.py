@@ -137,7 +137,6 @@ class Login(Resource):
 
     def options(self):
         response = make_response()
-        r = request
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
         response.headers.add('Access-Control-Allow-Methods', 'POST')
         response.headers['Access-Control-Allow-Credentials'] = 'true'

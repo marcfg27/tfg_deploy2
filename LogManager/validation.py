@@ -123,7 +123,7 @@ def input_validation_fail_code(username, code, ip, url, method, user_agent, cont
     logger.warning(code_failed)
 
 
-def input_validation_fail_email_caller(username, email , request):
+def input_validation_fail_email_caller(username , request):
     input_validation_fail_email(
         username,
         request.remote_addr,

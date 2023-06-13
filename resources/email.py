@@ -15,7 +15,7 @@ from unidecode import unidecode
 
 from acces_control import generate_auth_token
 from lock import lock
-from models.accounts import AccountsModel, auth, mail
+from models.accounts import AccountsModel,mail
 from LogManager import EmailLog,validation
 
 
@@ -38,7 +38,7 @@ class eMail(Resource):
             if not valid_code:
                 validation.input_validation_fail_code_caller(g.user.username,data['code'],request)
                 return {'message': 'Invalid Code. Only alphanumeric characters are allowed.'}, 400
-            if g.user is not None and verify_verification_code(g.user.code, code):
+            if verify_verification_code(g.user.code, code):
                 g.user.code = None
                 g.user.save_to_db()
                 username = g.user.username
@@ -69,7 +69,6 @@ class eMail(Resource):
 
    # @require_access('g_email')
     def get(self):
-        r =request
         with lock.lock:
             if g.user is None:
                 return {'message': "Invalid token: " + g.auth_error}, 401
@@ -97,7 +96,6 @@ class eMail(Resource):
                 return response
 
     def options(self):
-        r = request
         response = make_response()
        # response.headers['Access-Control-Allow-Credentials'] = 'http://127.0.0.1:5000'
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')

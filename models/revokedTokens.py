@@ -1,5 +1,5 @@
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from datab import db
 
