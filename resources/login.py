@@ -66,7 +66,7 @@ def catch_exceptions(f):
             return {'message': 'Rate limit exceeded'}, 429
         except Exception as e:
             logging.error('Unexpected error during login: %s', e)
-            response = {"message": "An unexpected error occurred during login"}
+            response = jsonify({"message": "An unexpected error occurred during login"})
             response.status_code = 500
             return response
     return wrapper

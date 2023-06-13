@@ -62,6 +62,8 @@ class Posts(Resource):
             posts = PostsModel.get_comments(data["limit"], data["offset"])
             if posts:
                 return {"posts": [post.json() for post in posts]}, 200
+            else:
+                return {"posts": []}, 200
         except Exception as e:
             return {"message": "An error occurred deleting the post"}, 500
         return {"message": "Post deleted successfully!"}, 200
