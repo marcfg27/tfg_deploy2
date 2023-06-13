@@ -40,7 +40,7 @@ app.config['CORS_SUPPORTS_CREDENTIALS'] = True
 api = Api(app)
 migrate = Migrate(app, db)
 db.init_app(app)
-#sslify = SSLify(app)
+sslify = SSLify(app)
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
